@@ -12,7 +12,7 @@ jobs:
         - uses: actions/checkout@v2                           
         - name: docker build                  
           working-directory: ./container
-          run: docker build -f registry/ubuntu-python3 .
+          run: docker build -t registry/ubuntu-python3 .
         - name: docker login
           run: docker login -u="${{ secrets.DOCKER_USERNAME }}" -p="${{ secrets.DOCKER_PASSWORD }}"
         - name: docker tag
