@@ -1,0 +1,22 @@
+name: Build API Image
+
+on:
+  push:
+    branches: [ master ]    
+
+jobs:    
+    build:      
+      name: Build 
+      runs-on: ubuntu-latest
+      steps:        
+        - uses: actions/checkout@v2                           
+        - name: docker build                  
+          working-directory: ./container
+          run: docker build -f registry/ubuntu-python3 .
+        - name: docker login
+          run: docker login -u="${{ secrets.DOCKER_USERNAME }}" -p="${{ secrets.DOCKER_PASSWORD }}"
+        - name: docker tag
+          run: |
+            docker tag registry/ubuntu-python3 gcvalderrama/ubuntu-python3:latest
+            docker push gcvalderrama/ubuntu-python3:latest
+    
